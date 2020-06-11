@@ -161,12 +161,12 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
                         }
                         else
                         {
-                            //TODO - Print Error
+                        
                         }
                     }
                     else
                     {
-                        //TODO - Print error message
+                    
                     }
                 }
                 catch (JSONException e)
@@ -230,7 +230,7 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
                             }
                             else
                             {
-                                //TODO - PRINT ERROR
+                            
                             }
                         }
                         else

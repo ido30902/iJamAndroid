@@ -1,19 +1,17 @@
 package com.example.ijamapp.Utilities;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Base64;
 import android.widget.ImageView;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import com.example.ijamapp.Classes.AudioTrack;
+import com.example.ijamapp.Classes.Post;
+import com.example.ijamapp.Classes.SoundManager;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -114,6 +112,11 @@ public class Utility
         {
             e.printStackTrace();
         }
+    }
+    
+    public static String generateAudioFileName(ArrayList<AudioTrack> audioTracks, Post post)
+    {
+        return post.getPost_id() + (audioTracks.size() + 1);
     }
     
     

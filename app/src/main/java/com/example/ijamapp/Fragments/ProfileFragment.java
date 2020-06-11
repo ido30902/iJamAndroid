@@ -98,8 +98,6 @@ public class ProfileFragment extends Fragment
         
         fetchProfileImage();
         
-        //makeTheImageRound();
-        
         fetchUsername(default_value_bundle.getString("user_id"));
         
     }
