@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">iJam</string>
+    <string name="password_error">Password incorrect</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="email_error">No such user registered</string>
+    <string name="email_taken">Email is already in use</string>
+    <string name="username_taken">Username is taken</string>
+    <string name="fill_all_fields">Please fill all fields</string>
+    <string name="blank_string"></string>
+    <string name="iJamLive">iJamLive</string>
+    <string name="profile">Profile</string>
+    <string name="loops">Loops</string>
+    <string name="search">Find</string>
+    <string name="response_error">Error in response from the server</string>
+    <string name="illegal_characters">The username contains illegal characters</string>
+    <string name="splashscreenfooter">Copyright &#169; iJam.live, 2020</string>
+    <string name="jam">Jam!</string>
+    <string name="_private">Private</string>
+    <string name="_public">Public</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

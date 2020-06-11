@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.LooperActivity">
+
+
+    <ImageView
+        android:id="@+id/Looper_ImageViewRecordButton"
+        android:layout_width="224dp"
+        android:layout_height="156dp"
+        android:contentDescription="@string/jam"
+        android:src="@drawable/ic_record"
+        app:layout_constraintBottom_toTopOf="@id/Looper_Time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.83"
+        android:background="@color/errorRed"/>
+
+    <TextView
+        android:id="@+id/Looper_Time"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        app:layout_constraintBottom_toTopOf="@id/Looper_ProgressBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.742"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Looper_ImageViewRecordButton" />
+
+    <ProgressBar
+        android:id="@+id/Looper_ProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="229dp"
+        android:layout_height="22dp"
+        app:layout_constraintTop_toBottomOf="@id/Looper_Time"
+        app:layout_constraintBottom_toTopOf="@id/Looper_play_pause"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteX="88dp"
+        tools:layout_editor_absoluteY="275dp" />
+
+    <Button
+        android:id="@+id/Looper_play_pause"
+        android:layout_width="52dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:src="@drawable/ic_play"
+        app:layout_constraintBottom_toTopOf="@id/Looper_RecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.253"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/Looper_ProgressBar" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/Looper_RecyclerView"
+        android:layout_width="409dp"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="64dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Looper_play_pause">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

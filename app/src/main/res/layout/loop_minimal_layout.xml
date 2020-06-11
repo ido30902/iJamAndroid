@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    
+    
+    <LinearLayout
+        android:id="@+id/minloopitem_toplinearlayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/minloopitem_bottomlinearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <ImageView
+            android:id="@+id/minloopitem_imgaeview"
+            android:layout_width="72dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/minloopitem_username"
+            android:layout_width="130dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/minloopitem_moreoptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text=""
+            android:src="@drawable/ic_more_loop_gray_24dp"
+            android:layout_marginStart="120dp"
+            android:layout_marginEnd="0dp"/>
+
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/minloopitem_bottomlinearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/minloopitem_toplinearlayout"
+        >
+
+        <Button
+            android:id="@+id/minloopitem_start_pause"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="start|bottom"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="2dp" />
+
+        <ProgressBar
+            android:id="@+id/minloopitem_progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/minloopitem_extend_retract"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="55dp"
+            android:layout_marginEnd="20dp"
+            />
+
+    </LinearLayout>
+    
+    
+</androidx.constraintlayout.widget.ConstraintLayout>

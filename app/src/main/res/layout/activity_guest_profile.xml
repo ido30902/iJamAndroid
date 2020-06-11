@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.GuestProfileActivity">
+
+    <TextView
+        android:id="@+id/guestprofile_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="TextView"
+        android:layout_marginEnd="80dp"
+        app:layout_constraintBottom_toTopOf="@id/guestprofile_listening"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/guestprofile_profilepicture"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.247" />
+
+    <TextView
+        android:id="@+id/guestprofile_Listeners"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@id/guestprofile_listen"
+        app:layout_constraintEnd_toStartOf="@id/guestprofile_listening"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guestprofile_profilepicture" />
+
+    <TextView
+        android:id="@+id/guestprofile_listening"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/guestprofile_Listeners"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintStart_toEndOf="@id/guestprofile_Listeners"
+        app:layout_constraintTop_toTopOf="@+id/guestprofile_Listeners"
+        app:layout_constraintVertical_bias="0.186" />
+
+
+    <ImageView
+        android:id="@+id/guestprofile_profilepicture"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        app:layout_constraintBottom_toBottomOf="@+id/guestprofile_username"
+        app:layout_constraintEnd_toStartOf="@+id/guestprofile_username"
+        app:layout_constraintHorizontal_bias="0.345"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guestprofile_username"
+        app:layout_constraintVertical_bias="0.027" />
+
+    <Button
+        android:id="@+id/guestprofile_listen"
+        android:layout_width="62dp"
+        android:layout_height="28dp"
+        android:text="Button"
+        android:textSize="7sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guestprofile_sendmessage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guestprofile_listening"
+        app:layout_constraintVertical_bias="0.114" />
+
+    <Button
+        android:id="@+id/guestprofile_sendmessage"
+        android:layout_width="60dp"
+        android:layout_height="29dp"
+        android:text="Button"
+        android:textSize="7sp"
+        app:layout_constraintBottom_toBottomOf="@+id/guestprofile_listen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/guestprofile_listen"
+        app:layout_constraintTop_toTopOf="@+id/guestprofile_listen"
+        app:layout_constraintVertical_bias="0.112" />
+</androidx.constraintlayout.widget.ConstraintLayout>
