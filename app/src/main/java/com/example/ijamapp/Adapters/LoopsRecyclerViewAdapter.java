@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -17,7 +18,7 @@ import com.example.ijamapp.Utilities.Utility;
 
 import java.util.ArrayList;
 
-public class LoopsRecyclerViewAdapter extends RecyclerView.Adapter
+public class LoopsRecyclerViewAdapter extends RecyclerView.Adapter<LoopsRecyclerViewAdapter.LoopViewHolder>
 {
     
     ArrayList<Post> posts;
@@ -29,120 +30,94 @@ public class LoopsRecyclerViewAdapter extends RecyclerView.Adapter
         this.onPressListener = mOnPressListener;
     }
     
-    @Override
-    public int getItemViewType(int position) {
-        
-        if (false) //TODO - Change it later
-        {
-            return 0;
-        }
-        return 1;
-    }
     
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    public LoopViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view;
         
-        if (viewType == 1)
-        {
-            view = layoutInflater.inflate(R.layout.loop_minimal_layout, parent, false);
-            return new MinimalLoopViewHolder(view, onPressListener);
-        }
-        view = layoutInflater.inflate(R.layout.loop_detailed_layout, parent, false);
-        return new DetailedLoopViewHolder(view, onPressListener);
+        view = layoutInflater.inflate(R.layout.loop_item_layout, parent, false);
+        return new LoopViewHolder(view, onPressListener);
     }
     
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull LoopViewHolder holder, int position)
     {
-        if (holder.getItemViewType() == 1)
+        holder.username.setText(posts.get(position).getAdmin_username());
+        if(posts.get(position).getAdmin().getProfilePicture() == null)
         {
-            //Bind minimal view
-            
-            MinimalLoopViewHolder minimalLoopViewHolder = (MinimalLoopViewHolder) holder;
-            
-            //minimalLoopViewHolder.username.setText(posts.get(position).getAdmin_username());
-            minimalLoopViewHolder.username.setText("it does work");
-            if(posts.get(position).getAdmin().getProfilePicture() == null)
-            {
-                minimalLoopViewHolder.profileImage.setImageResource(R.drawable.baseline_person_black_18dp);
-            }
-            else
-            {
-                minimalLoopViewHolder.profileImage.setImageBitmap(posts.get(position).getAdmin().getProfilePicture());
-            }
-           
-    
-            Utility.makeTheImageRound(minimalLoopViewHolder.profileImage);
-            
+            holder.profileImage.setImageResource(R.drawable.baseline_person_black_18dp);
         }
         else
         {
-            //Bind detailed view
-            DetailedLoopViewHolder detailedLoopViewHolder = (DetailedLoopViewHolder) holder;
-            
-            
+            holder.profileImage.setImageBitmap(posts.get(position).getAdmin().getProfilePicture());
         }
+        Utility.makeTheImageRound(holder.profileImage);
         
     }
     
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         return posts.size();
     }
     
-    class MinimalLoopViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
+    class LoopViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         ImageView profileImage;
         TextView username;
         ProgressBar progressBar;
         Button more_options;
-        Button extend_retract;
+        Button extend_retract_upper, extend_retract_lower;
         Button start_pause;
+        LinearLayout hiddenLinearLayout;
         
         onPressListener onPressListener;
         
-         MinimalLoopViewHolder(@NonNull View itemView, onPressListener mOnPressListener) {
+         LoopViewHolder(@NonNull final View itemView, onPressListener mOnPressListener) {
             super(itemView);
             
             // Default views
-            profileImage = itemView.findViewById(R.id.minloopitem_imgaeview);
-            username = itemView.findViewById(R.id.minloopitem_username);
-            progressBar = itemView.findViewById(R.id.minloopitem_progressbar);
-            more_options = itemView.findViewById(R.id.minloopitem_moreoptions);
-            extend_retract = itemView.findViewById(R.id.minloopitem_extend_retract);
-            start_pause = itemView.findViewById(R.id.minloopitem_start_pause);
+            profileImage = itemView.findViewById(R.id.loopitem_imgaeview);
+            username = itemView.findViewById(R.id.loopitem_username);
+            progressBar = itemView.findViewById(R.id.loopitem_progressbar);
+            more_options = itemView.findViewById(R.id.loopitem_moreoptions);
+            extend_retract_upper = itemView.findViewById(R.id.loopitem_extend_retract_upper);
+            start_pause = itemView.findViewById(R.id.loopitem_start_pause);
+            hiddenLinearLayout = itemView.findViewById(R.id.loopitem_hiddenlinearlayout);
+            extend_retract_lower = itemView.findViewById(R.id.loopitem_extend_retract_lower);
+            
+            extend_retract_lower.setVisibility(View.GONE);
             
             // On click listener
             onPressListener = mOnPressListener;
             
             // Assigns the click
             itemView.setOnClickListener(this);
-        }
+            
+            extend_retract_upper.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    boolean isExpanded = posts.get(getAdapterPosition()).isExpanded();
+                    hiddenLinearLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+                    extend_retract_upper.setVisibility(View.GONE);
+                    extend_retract_lower.setVisibility(View.VISIBLE);
+                }
+            });
     
-        @Override
-        public void onClick(View v) {
-            onPressListener.onPress(getAdapterPosition());
-        }
-    }
-    
-    class DetailedLoopViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
-    {
-        //TODO - fill views
-        onPressListener onPressListener;
-        
-        DetailedLoopViewHolder(@NonNull View itemView, onPressListener mOnPressListener) {
-            super(itemView);
-            
-            //Other views
+             extend_retract_lower.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     boolean isExpanded = posts.get(getAdapterPosition()).isExpanded();
+                     hiddenLinearLayout.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
+                     extend_retract_upper.setVisibility(View.VISIBLE);
+                     extend_retract_lower.setVisibility(View.GONE);
+                 }
+             });
             
             
-            onPressListener = mOnPressListener;
-            
-            itemView.setOnClickListener(this);
         }
     
         @Override
@@ -151,6 +126,8 @@ public class LoopsRecyclerViewAdapter extends RecyclerView.Adapter
             onPressListener.onPress(getAdapterPosition());
         }
     }
+    
+    
     
     public interface onPressListener
     {

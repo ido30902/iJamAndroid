@@ -2,11 +2,8 @@ package com.example.ijamapp.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.ViewCompat;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,10 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import com.example.ijamapp.Adapters.ViewPageAdapter;
-import com.example.ijamapp.Fragments.ProfileFragment;
 import com.example.ijamapp.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -122,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int state)
             {
-                
+            
             }
         });
     }
@@ -133,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         
         View instantRecordView = inflater.inflate(R.layout.instant_record_layout,null);
     
-        popupWindow = new PopupWindow(instantRecordView, ViewPager.LayoutParams.MATCH_PARENT, ViewPager.LayoutParams.MATCH_PARENT - 56);
+        popupWindow = new PopupWindow(instantRecordView, 1000, 1500);
         
         popupWindow.setElevation(5.0f);
         

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,9 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -65,6 +64,7 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
     private Button PUW_cancel;
     private Button PUW_jam;
     private Switch PUW_switch;
+    private EditText PUW_desc;
     
     // Constructor
     public LoopsFragment()
@@ -211,12 +211,17 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
         };
     }
     
-    private void uploadPost(final String post_owner, final Post post)
+    private void uploadPost(final Post post)
     {
     
         //TODO - Finish
     
     
+    
+    }
+    
+    private void updatePost(Post post)
+    {
     
     }
     
@@ -260,6 +265,8 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
         
         PUW_switch = view.findViewById(R.id.loopsetup_switch);
         
+        PUW_desc = view.findViewById(R.id.loopsetup_desc);
+        
         PUW_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -288,9 +295,15 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
                 //Post creation
                 Post post = new Post(default_value_bundle.getString("user_id"));
                 
+                if (PUW_switch.isChecked())
+                    post.setPublic(false);
+                
+                post.setDescription(PUW_desc.getText().toString());
+                
                 // Variables
                 Intent intent = new Intent(getContext(), LooperActivity.class);
                 intent.putExtra("post",post);
+                intent.putExtra("isNew",true);
                 
                 // Looper Activity started
                 startActivityForResult(intent,1);
@@ -309,15 +322,24 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
             {
                 if (data.getBooleanExtra("keep_post",false))
                 {
-                    Post post = data.getParcelableExtra("post");
-        
-                    uploadPost(default_value_bundle.getString("user_id"),post);
-        
-                    posts.add(post);
-                }
-                else
-                {
-                
+                    if (data.getBooleanExtra("isNew",false))
+                    {
+                        Post post = data.getParcelableExtra("post");
+    
+                        uploadPost(post);
+    
+                        posts.add(post);
+                    }
+                    else
+                    {
+                        Post post = data.getParcelableExtra("post");
+                        
+                        int position = data.getIntExtra("position",0);
+                        
+                        posts.set(position,post);
+                        
+                        updatePost(post);
+                    }
                 }
             }
             setRecyclerView();
@@ -329,6 +351,9 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
     {
         Intent intent = new Intent(getContext(),LooperActivity.class);
         intent.putExtra("post",posts.get(position));
+        intent.putExtra("isNew",false);
+        intent.putExtra("position",position);
+        
         startActivityForResult(intent,1);
     }
 }

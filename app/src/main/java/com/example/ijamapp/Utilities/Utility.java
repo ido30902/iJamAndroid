@@ -104,6 +104,18 @@ public class Utility
         }
     }
     
+    public static void waitAmountOfSeconds(int i)
+    {
+        try
+        {
+            TimeUnit.SECONDS.sleep(i);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
     
     
     

@@ -4,29 +4,31 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    
-    
+
+
+
+
     <LinearLayout
-        android:id="@+id/minloopitem_toplinearlayout"
+        android:id="@+id/loopitem_toplinearlayout"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/minloopitem_bottomlinearlayout"
+        app:layout_constraintBottom_toTopOf="@+id/loopitem_bottomlinearlayout"
         android:layout_width="match_parent"
         android:layout_height="40dp">
 
         <ImageView
-            android:id="@+id/minloopitem_imgaeview"
+            android:id="@+id/loopitem_imgaeview"
             android:layout_width="72dp"
             android:layout_height="match_parent" />
 
         <TextView
-            android:id="@+id/minloopitem_username"
+            android:id="@+id/loopitem_username"
             android:layout_width="130dp"
             android:layout_height="match_parent" />
 
         <Button
-            android:id="@+id/minloopitem_moreoptions"
+            android:id="@+id/loopitem_moreoptions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -38,16 +40,16 @@
     </LinearLayout>
     
     <LinearLayout
-        android:id="@+id/minloopitem_bottomlinearlayout"
+        android:id="@+id/loopitem_bottomlinearlayout"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/minloopitem_toplinearlayout"
+        app:layout_constraintTop_toBottomOf="@id/loopitem_toplinearlayout"
         >
 
         <Button
-            android:id="@+id/minloopitem_start_pause"
+            android:id="@+id/loopitem_start_pause"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="start|bottom"
@@ -56,22 +58,43 @@
             android:layout_marginBottom="2dp" />
 
         <ProgressBar
-            android:id="@+id/minloopitem_progressbar"
+            android:id="@+id/loopitem_progressbar"
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="wrap_content"
+            android:layout_width="299dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_gravity="center"/>
+            android:layout_weight="1" />
 
         <Button
-            android:id="@+id/minloopitem_extend_retract"
+            android:id="@+id/loopitem_extend_retract_upper"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="55dp"
             android:layout_marginEnd="20dp"
             />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/loopitem_hiddenlinearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        app:layout_constraintTop_toBottomOf="@id/loopitem_bottomlinearlayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/loopitem_extend_retract_lower"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
 
     </LinearLayout>
     

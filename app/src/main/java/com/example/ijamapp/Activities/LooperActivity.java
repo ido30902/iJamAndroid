@@ -45,7 +45,8 @@ public class LooperActivity extends AppCompatActivity {
     
     private RecyclerView recyclerView;
     
-    private boolean isPlaying, isRecording;
+    private boolean isPlaying, isRecording, isNew;
+    private int position; //optional
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,8 @@ public class LooperActivity extends AppCompatActivity {
         setVariables();
     
         askForPermissions(); // Asks only if necessary
+        
+        modifiedLayers.add(new AudioTrack());
         
     }
     
@@ -87,6 +90,8 @@ public class LooperActivity extends AppCompatActivity {
                             Intent intent = new Intent();
                             intent.putExtra("post",post);
                             intent.putExtra("keep_post",true);
+                            intent.putExtra("isNew",isNew);
+                            intent.putExtra("position",position);
                             
                             setResult(RESULT_FIRST_USER,intent);
                             LooperActivity.this.finish();
@@ -106,7 +111,10 @@ public class LooperActivity extends AppCompatActivity {
             return;
         
           post = getIntent().getParcelableExtra("post");
+          isNew = getIntent().getBooleanExtra("isNew",false);
           
+          if (!isNew)
+              position = getIntent().getIntExtra("position",0);
           // Extract the rest of the details
           
     }
@@ -141,7 +149,7 @@ public class LooperActivity extends AppCompatActivity {
                 
                 else
                {
-                   intent = new Intent(getApplicationContext(),RecordService.class);
+                   intent = new Intent(getApplicationContext(), RecordService.class);
                    startService(intent);
                }
             }

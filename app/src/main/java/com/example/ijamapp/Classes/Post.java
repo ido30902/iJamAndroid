@@ -9,10 +9,10 @@ public class Post implements Parcelable
 {
     private ArrayList<User> likes;
     private ArrayList<Comment> comments;
-    private String post_id;
+    private String post_id, description;
     private User admin;
     private ArrayList<User> participants;
-    private boolean isPublic;
+    private boolean isPublic, isExpanded;
     private SoundManager soundManager;
     
     public Post(String admin_id, String post_id)
@@ -38,9 +38,29 @@ public class Post implements Parcelable
     protected Post(Parcel in) {
         likes = in.createTypedArrayList(User.CREATOR);
         post_id = in.readString();
+        description = in.readString();
         admin = in.readParcelable(User.class.getClassLoader());
         participants = in.createTypedArrayList(User.CREATOR);
         isPublic = in.readByte() != 0;
+        isExpanded = in.readByte() != 0;
+        soundManager = in.readParcelable(SoundManager.class.getClassLoader());
+    }
+    
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(likes);
+        dest.writeString(post_id);
+        dest.writeString(description);
+        dest.writeParcelable(admin, flags);
+        dest.writeTypedList(participants);
+        dest.writeByte((byte) (isPublic ? 1 : 0));
+        dest.writeByte((byte) (isExpanded ? 1 : 0));
+        dest.writeParcelable(soundManager, flags);
+    }
+    
+    @Override
+    public int describeContents() {
+        return 0;
     }
     
     public static final Creator<Post> CREATOR = new Creator<Post>() {
@@ -155,18 +175,23 @@ public class Post implements Parcelable
         this.soundManager = soundManager;
     }
     
-    @Override
-    public int describeContents() {
-        return 0;
+    public boolean isExpanded()
+    {
+        return isExpanded;
     }
     
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void setExpanded(boolean expanded)
+    {
+        isExpanded = expanded;
+    }
     
-        dest.writeTypedList(likes);
-        dest.writeString(post_id);
-        dest.writeParcelable(admin, flags);
-        dest.writeTypedList(participants);
-        dest.writeByte((byte) (isPublic ? 1 : 0));
+    public String getDescription()
+    {
+        return description;
+    }
+    
+    public void setDescription(String description)
+    {
+        this.description = description;
     }
 }

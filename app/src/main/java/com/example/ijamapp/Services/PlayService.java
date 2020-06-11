@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
-import android.widget.ProgressBar;
 
 public class PlayService extends Service
 {
@@ -44,8 +43,11 @@ public class PlayService extends Service
     @Override
     public void onDestroy()
     {
-        //stop
-        
+        if (mediaPlayer != null)
+        {
+            mediaPlayer.pause();
+            mediaPlayer.release();
+        }
         
         super.onDestroy();
     }
