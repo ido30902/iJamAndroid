@@ -46,6 +46,7 @@ public class LoopsRecyclerViewAdapter extends RecyclerView.Adapter<LoopsRecycler
     public void onBindViewHolder(@NonNull LoopViewHolder holder, int position)
     {
         holder.username.setText(posts.get(position).getAdmin_username());
+        
         if(posts.get(position).getAdmin().getProfilePicture() == null)
         {
             holder.profileImage.setImageResource(R.drawable.baseline_person_black_18dp);
@@ -90,6 +91,9 @@ public class LoopsRecyclerViewAdapter extends RecyclerView.Adapter<LoopsRecycler
             extend_retract_lower = itemView.findViewById(R.id.loopitem_extend_retract_lower);
             
             extend_retract_lower.setVisibility(View.GONE);
+            hiddenLinearLayout.setVisibility(View.GONE);
+            
+            more_options.setBackgroundResource(R.drawable.ic_more_loop_gray_24dp);
             
             // On click listener
             onPressListener = mOnPressListener;
@@ -116,7 +120,24 @@ public class LoopsRecyclerViewAdapter extends RecyclerView.Adapter<LoopsRecycler
                      extend_retract_lower.setVisibility(View.GONE);
                  }
              });
-            
+             
+             start_pause.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                    boolean isPlaying = posts.get(getAdapterPosition()).isPlaying();
+                     if (isPlaying)
+                    {
+                        start_pause.setBackgroundResource(R.drawable.ic_pause);
+                        //posts.get(getAdapterPosition()).getSoundManager().getSoundPool().play(1); //TODO - Finish
+                    }
+                    else
+                    {
+                        start_pause.setBackgroundResource(R.drawable.ic_play);
+                        //posts.get(getAdapterPosition()).getSoundManager().getSoundPool().stop(1); TODO - Finish
+                    }
+                    posts.get(getAdapterPosition()).setPlaying(!isPlaying);
+                 }
+             });
             
         }
     
@@ -126,8 +147,6 @@ public class LoopsRecyclerViewAdapter extends RecyclerView.Adapter<LoopsRecycler
             onPressListener.onPress(getAdapterPosition());
         }
     }
-    
-    
     
     public interface onPressListener
     {

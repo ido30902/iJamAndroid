@@ -12,7 +12,7 @@ public class Post implements Parcelable
     private String post_id, description;
     private User admin;
     private ArrayList<User> participants;
-    private boolean isPublic, isExpanded;
+    private boolean isPublic, isExpanded, isPlaying;
     private SoundManager soundManager;
     
     public Post(String admin_id, String post_id)
@@ -35,6 +35,7 @@ public class Post implements Parcelable
         this.participants = participants;
     }
     
+    
     protected Post(Parcel in) {
         likes = in.createTypedArrayList(User.CREATOR);
         post_id = in.readString();
@@ -43,6 +44,7 @@ public class Post implements Parcelable
         participants = in.createTypedArrayList(User.CREATOR);
         isPublic = in.readByte() != 0;
         isExpanded = in.readByte() != 0;
+        isPlaying = in.readByte() != 0;
         soundManager = in.readParcelable(SoundManager.class.getClassLoader());
     }
     
@@ -55,6 +57,7 @@ public class Post implements Parcelable
         dest.writeTypedList(participants);
         dest.writeByte((byte) (isPublic ? 1 : 0));
         dest.writeByte((byte) (isExpanded ? 1 : 0));
+        dest.writeByte((byte) (isPlaying ? 1 : 0));
         dest.writeParcelable(soundManager, flags);
     }
     
@@ -193,5 +196,13 @@ public class Post implements Parcelable
     public void setDescription(String description)
     {
         this.description = description;
+    }
+    
+    public boolean isPlaying() {
+        return isPlaying;
+    }
+    
+    public void setPlaying(boolean playing) {
+        isPlaying = playing;
     }
 }

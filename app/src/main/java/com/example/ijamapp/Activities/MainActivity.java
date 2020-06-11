@@ -4,6 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -11,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.example.ijamapp.Adapters.ViewPageAdapter;
 import com.example.ijamapp.R;
@@ -28,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     PopupWindow popupWindow;
     Button PUW_closewindow;
     
+    BroadcastReceiver wifiChecker;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +43,29 @@ public class MainActivity extends AppCompatActivity {
         
         setView();
         
+        initWifiStateChecker();
+        
+    }
+    
+    @Override
+    protected void onStart() {
+        super.onStart();
+    
+        IntentFilter intentFilter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        registerReceiver(wifiChecker, intentFilter);
+    }
+    
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(wifiChecker);
+    }
+    
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(wifiChecker);
+        
+        super.onDestroy();
     }
     
     private void setView()
@@ -150,6 +180,31 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    
+    private void initWifiStateChecker()
+    {
+        
+        wifiChecker = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                int wifiStateInt = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,
+                        WifiManager.WIFI_STATE_UNKNOWN);
+    
+                switch(wifiStateInt)
+                {
+                    case WifiManager.WIFI_STATE_ENABLED:
+                        break;
+                    
+                    case WifiManager.WIFI_STATE_DISABLED:
+                        Toast.makeText(getApplicationContext(),"Please enable WIFI for full experience",Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+        };
+        
+    }
+    
+    
     
     
 }

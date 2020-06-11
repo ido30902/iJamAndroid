@@ -30,6 +30,7 @@ import com.example.ijamapp.Adapters.LoopsRecyclerViewAdapter;
 import com.example.ijamapp.Classes.Interfaces.IVolleyCallBack;
 import com.example.ijamapp.Classes.Post;
 import com.example.ijamapp.R;
+import com.example.ijamapp.Utilities.MySingleton;
 import com.example.ijamapp.Utilities.NetworkProperties;
 import com.example.ijamapp.Utilities.Utility;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -38,6 +39,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UTFDataFormatException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -95,6 +97,8 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
             }
         });
         
+        getUserDetails(default_value_bundle.getString("user_id"));
+        
         setRecyclerView();
     }
     
@@ -134,6 +138,58 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
         recyclerView.setAdapter(adapter);
         
         
+    }
+    
+    private void getUserDetails(final String user_id)
+    {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, NetworkProperties.SERVER_MANAGER_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response)
+            {
+                
+                try
+                {
+                    JSONObject jsonObject = new JSONObject(response);
+                    
+                    if (jsonObject.has("isValid"))
+                    {
+                        String ans = Utility.trimBooleanResponse(jsonObject.getString("isValid"));
+                        
+                        if (ans.equals("true"))
+                        {
+                            default_value_bundle.putString("username",Utility.trimStringResponse(jsonObject.getString("username")));
+                        }
+                        else
+                        {
+                            //TODO - Print Error
+                        }
+                    }
+                    else
+                    {
+                        //TODO - Print error message
+                    }
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+        
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("request_name","GET_USER_DETAILS");
+                params.put("user_id",user_id);
+                return params;
+            }
+        };
+        MySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
     
     private void fetchPosts(final String user_id, final IVolleyCallBack iVolleyCallBack)
@@ -294,6 +350,8 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
                 
                 //Post creation
                 Post post = new Post(default_value_bundle.getString("user_id"));
+                
+                post.setAdmin_username(default_value_bundle.getString("username"));
                 
                 if (PUW_switch.isChecked())
                     post.setPublic(false);
