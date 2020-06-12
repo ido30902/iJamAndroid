@@ -19,11 +19,13 @@ public class Post implements Parcelable
     {
         admin = new User(admin_id);
         this.post_id = post_id;
+        soundManager = new SoundManager();
     }
     
     public Post (String admin_id)
     {
         admin = new User(admin_id);
+        soundManager = new SoundManager();
     }
     
     public Post(ArrayList<User> likes, ArrayList<Comment> comments, String admin_id, String post_id, ArrayList<User> participants)
@@ -33,6 +35,7 @@ public class Post implements Parcelable
         this.comments = comments;
         this.post_id = post_id;
         this.participants = participants;
+        soundManager = new SoundManager();
     }
     
     

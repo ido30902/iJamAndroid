@@ -141,15 +141,19 @@ public class LooperActivity extends AppCompatActivity {
                 manageRecordState();
                 Intent intent;
                 
-               if (isRecording)
+               if (!isRecording)
                {
                    intent = new Intent(getApplicationContext(), RecordService.class);
+                   intent.putExtra("command","record");
+                   intent.putExtra("post",post);
                    stopService(intent);
                }
                 
                 else
                {
                    intent = new Intent(getApplicationContext(), RecordService.class);
+                   intent.putExtra("command","record");
+                   intent.putExtra("post",post);
                    startService(intent);
                }
             }
@@ -166,6 +170,7 @@ public class LooperActivity extends AppCompatActivity {
                     intent = new Intent(getApplicationContext(), PlayService.class);
                     intent.putExtra("sound_manager",post.getSoundManager());
                     stopService(intent);
+                    post.getSoundManager().loadSound(Utility.generateAudioFileName(post));
                 }
                 else
                 {
@@ -204,9 +209,23 @@ public class LooperActivity extends AppCompatActivity {
     
     private void askForPermissions()
     {
+        String[] request;
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)
         {
-            String[] request = {Manifest.permission.RECORD_AUDIO};
+            request = new String[1];
+            request[0] = Manifest.permission.RECORD_AUDIO;
+            ActivityCompat.requestPermissions(LooperActivity.this,request,1);
+        }
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+        {
+            request = new String[1];
+            request[0] = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+            ActivityCompat.requestPermissions(LooperActivity.this,request,1);
+        }
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+        {
+            request = new String[1];
+            request[0] = Manifest.permission.READ_EXTERNAL_STORAGE;
             ActivityCompat.requestPermissions(LooperActivity.this,request,1);
         }
     }
@@ -234,12 +253,20 @@ public class LooperActivity extends AppCompatActivity {
     
     private void loadThreeSecondsPrepAnimation()
     {
+        Intent intent = new Intent(getApplicationContext(),PlayService.class);
+        intent.putExtra("command","tick");
         //set 3
+        startService(intent);
         Utility.waitOneSecond();
+        stopService(intent);
         //set 2
+        startService(intent);
         Utility.waitOneSecond();
+        stopService(intent);
         //set 1
+        startService(intent);
         Utility.waitOneSecond();
+        stopService(intent);
     }
     
 }

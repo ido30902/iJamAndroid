@@ -114,9 +114,9 @@ public class Utility
         }
     }
     
-    public static String generateAudioFileName(ArrayList<AudioTrack> audioTracks, Post post)
+    public static String generateAudioFileName( Post post)
     {
-        return post.getPost_id() + (audioTracks.size() + 1);
+        return post.getPost_id() + "_" + (post.getSoundManager().getAudioTracksSize() + 1);
     }
     
     

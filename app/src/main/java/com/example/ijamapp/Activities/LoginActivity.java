@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -27,7 +26,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
+
 
 public class LoginActivity extends AppCompatActivity
 {
@@ -167,7 +166,7 @@ public class LoginActivity extends AppCompatActivity
                             }
                             else
                             {
-                                pop_up_message.setText("Error in response from the server");
+                                pop_up_message.setText(R.string.unknown_error);
                             }
                         }
                         else
@@ -178,19 +177,19 @@ public class LoginActivity extends AppCompatActivity
                             }
                             else
                             {
-                                pop_up_message.setText("Error in response from the server");
+                                pop_up_message.setText(R.string.unknown_error);
                             }
                         }
                     }
                     else
                     {
-                        pop_up_message.setText("Error in response from the server");
+                        pop_up_message.setText(R.string.unknown_error);
                     }
                 }
                 catch (JSONException e)
                 {
                     e.printStackTrace();
-                    pop_up_message.setText("Error in response from the server");
+                    pop_up_message.setText(R.string.unknown_error);
                 }
                 login_button.setClickable(true);
             }
@@ -199,7 +198,7 @@ public class LoginActivity extends AppCompatActivity
             public void onErrorResponse(VolleyError error) {
                 
                 error.printStackTrace();
-                pop_up_message.setText("Error in response from the server");
+                pop_up_message.setText(R.string.unknown_error);
                 login_button.setClickable(true);
             }
         })
