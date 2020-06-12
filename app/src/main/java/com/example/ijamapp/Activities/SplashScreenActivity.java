@@ -12,7 +12,10 @@ import gr.net.maroulis.library.EasySplashScreen;
 
 public class SplashScreenActivity extends AppCompatActivity
 {
-    
+    /**
+     * onCreate
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

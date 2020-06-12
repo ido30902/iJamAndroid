@@ -27,10 +27,15 @@ import java.util.Map;
 public class EmailRecoveryActivity extends AppCompatActivity
 {
     
+    // Variables
     TextView pop_up_message;
     TextInputEditText email_input;
     Button submit;
     
+    /**
+     * onCreate method
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -41,6 +46,9 @@ public class EmailRecoveryActivity extends AppCompatActivity
         
     }
     
+    /**
+     * sets the views of the activity
+     */
     private void setViews()
     {
         //Text view
@@ -65,6 +73,10 @@ public class EmailRecoveryActivity extends AppCompatActivity
         });
     }
     
+    /**
+     * send the request to the server
+     * @param email
+     */
     private void makeForgotPasswordRequest(final String email)
     {
         StringRequest request = new StringRequest(Request.Method.POST, NetworkProperties.SERVER_MANAGER_URL, new Response.Listener<String>() {
@@ -144,6 +156,10 @@ public class EmailRecoveryActivity extends AppCompatActivity
         MySingleton.getInstance(this).addToRequestQueue(request);
     }
     
+    /**
+     * analyze the error response
+     * @param error
+     */
     public void extractResponseError(String error)
     {
         if (error == null)
@@ -170,7 +186,11 @@ public class EmailRecoveryActivity extends AppCompatActivity
         
     }
     
-    
+    /**
+     * check the fields
+     * @param email
+     * @return fields are empty
+     */
     public boolean checkFields(String email)
     {
         if(email == null)

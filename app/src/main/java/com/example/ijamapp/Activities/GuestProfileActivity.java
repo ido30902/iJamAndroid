@@ -14,13 +14,17 @@ import com.example.ijamapp.Utilities.Utility;
 
 public class GuestProfileActivity extends AppCompatActivity {
     
+    // Variables
     TextView username, listening, listeners;
     ImageView profilepicture;
     Button listen, send_message;
     
     private User user;
     
-    
+    /**
+     * onCreate
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +36,9 @@ public class GuestProfileActivity extends AppCompatActivity {
         
     }
     
+    /**
+     * sets the views of the activity
+     */
     private void setViews()
     {
         //Text Views
@@ -77,6 +84,9 @@ public class GuestProfileActivity extends AppCompatActivity {
         Utility.makeTheImageRound(profilepicture);
     }
     
+    /**
+     * extracts the values from the intent
+     */
     private void getValues()
     {
         if(getIntent() == null)

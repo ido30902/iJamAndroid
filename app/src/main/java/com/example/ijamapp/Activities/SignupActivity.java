@@ -30,11 +30,16 @@ import java.util.Map;
 public class SignupActivity extends AppCompatActivity
 {
     
+    // Views
     TextInputEditText email_input, password_input, username_input, password_confirmation_input;
     TextView pop_up_message, signup, toLogin;
     Button signup_button;
     Switch remember_me;
     
+    /**
+     * onCreate
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -46,6 +51,9 @@ public class SignupActivity extends AppCompatActivity
         
     }
     
+    /**
+     * sets the view of the activity
+     */
     private void setViews()
     {
         //input init
@@ -89,6 +97,14 @@ public class SignupActivity extends AppCompatActivity
         
     }
     
+    /**
+     * checks the fields
+     * @param email String email
+     * @param username String username
+     * @param password String password
+     * @param password_confirmation String password confirmation
+     * @return if fields are valid
+     */
     private boolean checkFields(String email, String username, String password, String password_confirmation)
     {
         if (email.isEmpty() || username.isEmpty() || password.isEmpty() || password_confirmation.isEmpty())
@@ -117,6 +133,12 @@ public class SignupActivity extends AppCompatActivity
         return true;
     }
     
+    /**
+     * makes the sign-up request to the server
+     * @param email String email
+     * @param username String username
+     * @param password String password
+     */
     private void makeSignupRequest(final String email, final String username, final String password)
     {
         StringRequest request = new StringRequest(Request.Method.POST, NetworkProperties.SERVER_MANAGER_URL, new Response.Listener<String>() {
@@ -202,6 +224,10 @@ public class SignupActivity extends AppCompatActivity
         MySingleton.getInstance(this).addToRequestQueue(request);
     }
     
+    /**
+     * extracts the error from the server
+     * @param error String error - response
+     */
     private void extractResponseError(String error)
     {
         switch(error)
@@ -233,9 +259,13 @@ public class SignupActivity extends AppCompatActivity
         editor.apply();
     }
     
+    /**
+     * checks the password strength
+     * @param passeword String input password
+     */
     private void checkPasswordStrength(String passeword)
     {
-    
+        //TODO - implement
         
         
     }

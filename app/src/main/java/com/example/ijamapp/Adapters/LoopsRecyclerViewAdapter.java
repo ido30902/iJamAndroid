@@ -18,19 +18,28 @@ import com.example.ijamapp.Utilities.Utility;
 
 import java.util.ArrayList;
 
+/**
+ * recycler custom adapter class
+ */
 public class LoopsRecyclerViewAdapter extends RecyclerView.Adapter<LoopsRecyclerViewAdapter.LoopViewHolder>
 {
-    
+    // Variables
     ArrayList<Post> posts;
     private onPressListener onPressListener;
     
+    // Constructor
     public LoopsRecyclerViewAdapter(ArrayList<Post> postArrayList, onPressListener mOnPressListener)
     {
         this.posts = postArrayList;
         this.onPressListener = mOnPressListener;
     }
     
-    
+    /**
+     * creates the view holder
+     * @param parent parent layout
+     * @param viewType  view type
+     * @return new View holder
+     */
     @NonNull
     @Override
     public LoopViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
@@ -42,6 +51,11 @@ public class LoopsRecyclerViewAdapter extends RecyclerView.Adapter<LoopsRecycler
         return new LoopViewHolder(view, onPressListener);
     }
     
+    /**
+     * binds the view holder
+     * @param holder viewholder
+     * @param position int adapter position
+     */
     @Override
     public void onBindViewHolder(@NonNull LoopViewHolder holder, int position)
     {
@@ -59,14 +73,22 @@ public class LoopsRecyclerViewAdapter extends RecyclerView.Adapter<LoopsRecycler
         
     }
     
+    /**
+     * gets the item count
+     * @returnm int item count
+     */
     @Override
     public int getItemCount()
     {
         return posts.size();
     }
     
+    /**
+     * view holder class
+     */
     class LoopViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
+        // Views
         ImageView profileImage;
         TextView username;
         ProgressBar progressBar;
@@ -77,7 +99,8 @@ public class LoopsRecyclerViewAdapter extends RecyclerView.Adapter<LoopsRecycler
         
         onPressListener onPressListener;
         
-         LoopViewHolder(@NonNull final View itemView, onPressListener mOnPressListener) {
+        // Constructor
+        LoopViewHolder(@NonNull final View itemView, onPressListener mOnPressListener) {
             super(itemView);
             
             // Default views
@@ -141,6 +164,10 @@ public class LoopsRecyclerViewAdapter extends RecyclerView.Adapter<LoopsRecycler
             
         }
     
+        /**
+         * onClick
+         * @param v view
+         */
         @Override
         public void onClick(View v)
         {
@@ -148,6 +175,9 @@ public class LoopsRecyclerViewAdapter extends RecyclerView.Adapter<LoopsRecycler
         }
     }
     
+    /**
+     * on press interface
+     */
     public interface onPressListener
     {
         void onPress(int position);

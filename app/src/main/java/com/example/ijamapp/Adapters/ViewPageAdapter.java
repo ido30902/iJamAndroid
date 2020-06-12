@@ -12,22 +12,29 @@ import com.example.ijamapp.Fragments.iJamLiveFragment;
 
 public class ViewPageAdapter extends FragmentPagerAdapter {
     
+    // Fragments
     private ProfileFragment profileFragment;
     private LoopsFragment loopsFragment;
     private iJamLiveFragment iJamLiveFragment;
     private FindFragment findFragment;
     
     
-   public ViewPageAdapter(FragmentManager fragmentManager)
-   {
+    // Constructor
+    public ViewPageAdapter(FragmentManager fragmentManager)
+    {
        super(fragmentManager,FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
        
        profileFragment = new ProfileFragment();
        loopsFragment = new LoopsFragment();
        iJamLiveFragment = new iJamLiveFragment();
        findFragment = new FindFragment();
-   }
-   
+    }
+    
+    /**
+     * gets the current item
+     * @param position int position
+     * @return the fragment
+     */
     @NonNull
     @Override
     public Fragment getItem(int position) {
@@ -49,6 +56,10 @@ public class ViewPageAdapter extends FragmentPagerAdapter {
        return null;
     }
     
+    /**
+     * gets the item count
+     * @return 4 fragments
+     */
     @Override
     public int getCount() {
         return 4;

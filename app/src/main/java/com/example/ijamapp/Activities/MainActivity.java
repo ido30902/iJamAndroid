@@ -34,8 +34,13 @@ public class MainActivity extends AppCompatActivity {
     PopupWindow popupWindow;
     Button PUW_closewindow;
     
+    // BroadcastReceiver
     BroadcastReceiver wifiChecker;
     
+    /**
+     * onCreate
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
         
     }
     
+    /**
+     * onStart
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -55,12 +63,18 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(wifiChecker, intentFilter);
     }
     
+    /**
+     * onStop
+     */
     @Override
     protected void onStop() {
         super.onStop();
         unregisterReceiver(wifiChecker);
     }
     
+    /**
+     * onDestroy
+     */
     @Override
     protected void onDestroy() {
         unregisterReceiver(wifiChecker);
@@ -68,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
     
+    /**
+     * sets the view of the activity
+     */
     private void setView()
     {
         
@@ -152,6 +169,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     
+    /**
+     * Creates the pop up window
+     */
     private void createPopUpWindow()
     {
         LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -167,6 +187,10 @@ public class MainActivity extends AppCompatActivity {
         popupWindow.showAtLocation(viewPager, Gravity.CENTER,0,0);
     }
     
+    /**
+     * sets up the window view
+     * @param instant_record_view pop up window view
+     */
     public void setPopUpWindowViews(View instant_record_view)
     {
         PUW_closewindow = instant_record_view.findViewById(R.id.intantrecord_close);
@@ -181,6 +205,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     
+    /**
+     * initializes the wifi state checker
+     */
     private void initWifiStateChecker()
     {
         

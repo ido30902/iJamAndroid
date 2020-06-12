@@ -34,20 +34,31 @@ import java.util.concurrent.TimeUnit;
 
 public class LooperActivity extends AppCompatActivity {
     
+    
+    /* Variables */
+    
+    // Current User and post
     private Post post;
     private ArrayList<AudioTrack> modifiedLayers;
     private User currentUser;
     
+    // Views
     private TextView time;
     private ProgressBar progressBar;
     private ImageView record_button;
     private Button play_pause;
     
+    // RecyclerView properties
     private RecyclerView recyclerView;
     
+    // Default variables
     private boolean isPlaying, isRecording, isNew;
     private int position; //optional
     
+    /**
+     * onCreate
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +76,9 @@ public class LooperActivity extends AppCompatActivity {
         
     }
     
-    
+    /**
+     * Called when back button pressed
+     */
     @Override
     public void onBackPressed()
     {
@@ -105,6 +118,9 @@ public class LooperActivity extends AppCompatActivity {
         }
     }
     
+    /**
+     * Extracts the intent values to a bundle
+     */
     private void getValues()
     {
         if(getIntent() == null)
@@ -119,6 +135,9 @@ public class LooperActivity extends AppCompatActivity {
           
     }
     
+    /**
+     * sets the activity views
+     */
     private void setViews()
     {
         // Progress Bar
@@ -187,6 +206,9 @@ public class LooperActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
     
+    /**
+     * assigning the default variables
+     */
     private void setVariables()
     {
         modifiedLayers = new ArrayList<>();
@@ -197,6 +219,9 @@ public class LooperActivity extends AppCompatActivity {
         
     }
     
+    /**
+     * sets the recyclerview
+     */
     private void setRecyclerView()
     {
     
@@ -207,29 +232,32 @@ public class LooperActivity extends AppCompatActivity {
     
     }
     
+    /**
+     * Asks for the needed permissions
+     */
     private void askForPermissions()
     {
-        String[] request;
+        String[] request = new String[1];
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)
         {
-            request = new String[1];
             request[0] = Manifest.permission.RECORD_AUDIO;
             ActivityCompat.requestPermissions(LooperActivity.this,request,1);
         }
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
         {
-            request = new String[1];
             request[0] = Manifest.permission.WRITE_EXTERNAL_STORAGE;
             ActivityCompat.requestPermissions(LooperActivity.this,request,1);
         }
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
         {
-            request = new String[1];
             request[0] = Manifest.permission.READ_EXTERNAL_STORAGE;
             ActivityCompat.requestPermissions(LooperActivity.this,request,1);
         }
     }
     
+    /**
+     * manages isplaying state + images
+     */
     private void managePlayPause()
     {
         isPlaying = !isPlaying;
@@ -239,6 +267,9 @@ public class LooperActivity extends AppCompatActivity {
             play_pause.setBackgroundResource(R.drawable.ic_play);
     }
     
+    /**
+     * manages the record state + images
+     */
     private void manageRecordState()
     {
         isRecording = !isRecording;
@@ -251,22 +282,28 @@ public class LooperActivity extends AppCompatActivity {
             record_button.setImageResource(R.drawable.ic_record);
     }
     
+    /**
+     * loads preparation animation
+     */
     private void loadThreeSecondsPrepAnimation()
     {
         Intent intent = new Intent(getApplicationContext(),PlayService.class);
         intent.putExtra("command","tick");
         //set 3
         startService(intent);
-        Utility.waitOneSecond();
         stopService(intent);
+        Utility.waitOneSecond();
+        
         //set 2
         startService(intent);
-        Utility.waitOneSecond();
         stopService(intent);
+        Utility.waitOneSecond();
+        
         //set 1
         startService(intent);
-        Utility.waitOneSecond();
         stopService(intent);
+        Utility.waitOneSecond();
+        
     }
     
 }

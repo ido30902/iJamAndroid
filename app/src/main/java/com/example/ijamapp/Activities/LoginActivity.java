@@ -30,6 +30,8 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity
 {
+    
+    // Variables
     TextInputEditText email_input, password_input;
     TextView pop_up_message, click_here, signup;
     Button login_button;
@@ -55,6 +57,9 @@ public class LoginActivity extends AppCompatActivity
         
     }
     
+    /**
+     * sets the views of the activity
+     */
     private void setViews()
     {
         //Text Views
@@ -107,6 +112,12 @@ public class LoginActivity extends AppCompatActivity
         });
     }
     
+    /**
+     * checks the fields
+     * @param email email string
+     * @param password password string
+     * @return if fields empty
+     */
     private boolean checkFields(String email, String password)
     {
         if (email.isEmpty() || password.isEmpty())
@@ -122,6 +133,11 @@ public class LoginActivity extends AppCompatActivity
         return true;
     }
     
+    /**
+     * performs the login server request
+     * @param email
+     * @param password
+     */
     private void makeLoginRequest(final String email, final String password)
     {
         StringRequest request = new StringRequest(Request.Method.POST, NetworkProperties.SERVER_MANAGER_URL, new Response.Listener<String>() {
@@ -166,7 +182,7 @@ public class LoginActivity extends AppCompatActivity
                             }
                             else
                             {
-                                pop_up_message.setText(R.string.unknown_error);
+                                pop_up_message.setText(R.string.response_error);
                             }
                         }
                         else
@@ -177,19 +193,19 @@ public class LoginActivity extends AppCompatActivity
                             }
                             else
                             {
-                                pop_up_message.setText(R.string.unknown_error);
+                                pop_up_message.setText(R.string.response_error);
                             }
                         }
                     }
                     else
                     {
-                        pop_up_message.setText(R.string.unknown_error);
+                        pop_up_message.setText(R.string.response_error);
                     }
                 }
                 catch (JSONException e)
                 {
                     e.printStackTrace();
-                    pop_up_message.setText(R.string.unknown_error);
+                    pop_up_message.setText(R.string.response_error);
                 }
                 login_button.setClickable(true);
             }
@@ -218,6 +234,9 @@ public class LoginActivity extends AppCompatActivity
         
     }
     
+    /**
+     * check if login info is cached on client's device
+     */
     private void checkDefaultLogin()
     {
         SharedPreferences sharedPreferences = getSharedPreferences("LOGIN",MODE_PRIVATE);
@@ -239,6 +258,10 @@ public class LoginActivity extends AppCompatActivity
         }
     }
     
+    /**
+     *analyze the error from the server
+     * @param error string of the response
+     */
     private void extractResponseError(String error)
     {
         
@@ -258,6 +281,11 @@ public class LoginActivity extends AppCompatActivity
         }
     }
     
+    /**
+     * saves the login info for the next login - makes it automatic
+     * @param email String email
+     * @param password String password
+     */
     private void saveLoginInfo(String email, String password)
     {
         SharedPreferences sharedPreferences = getSharedPreferences("LOGIN",MODE_PRIVATE);
@@ -273,6 +301,10 @@ public class LoginActivity extends AppCompatActivity
         editor.apply();
     }
     
+    /**
+     * Checks if the user pressed "logout" so another account can log in
+     * @return if true
+     */
     private boolean checkReturnFromSignout()
     {
         if (getIntent() == null)

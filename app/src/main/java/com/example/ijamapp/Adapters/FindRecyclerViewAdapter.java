@@ -20,16 +20,22 @@ import java.util.ArrayList;
 
 public class FindRecyclerViewAdapter extends RecyclerView.Adapter<FindRecyclerViewAdapter.FindViewHolder> {
     
+    //Variables
     ArrayList<User> users;
     private OnPressListener onPressListener;
     
+    /**
+     * View holder class
+     */
     class FindViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         
+        // Views
         ImageView profilePicture;
         TextView username;
         OnPressListener onPressListener;
         
+        // Constructor
         FindViewHolder(View itemView, OnPressListener onPressListener)
         {
             super(itemView);
@@ -47,13 +53,19 @@ public class FindRecyclerViewAdapter extends RecyclerView.Adapter<FindRecyclerVi
         }
     }
     
+    // Constructor
     public FindRecyclerViewAdapter(ArrayList<User> usr, OnPressListener monPressListener)
     {
         users = usr;
         this.onPressListener = monPressListener;
     }
     
-    
+    /**
+     *
+     * @param parent parent layout
+     * @param viewType viewtype
+     * @return new ViewHolder
+     */
     @NonNull
     @Override
     public FindViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -63,6 +75,11 @@ public class FindRecyclerViewAdapter extends RecyclerView.Adapter<FindRecyclerVi
         return new FindViewHolder(view, onPressListener);
     }
     
+    /**
+     * binds the viewholder to the views
+     * @param holder viewholder
+     * @param position adapter position
+     */
     @Override
     public void onBindViewHolder(@NonNull FindViewHolder holder, int position) {
         
@@ -82,11 +99,18 @@ public class FindRecyclerViewAdapter extends RecyclerView.Adapter<FindRecyclerVi
         Utility.makeTheImageRound(holder.profilePicture);
     }
     
+    /**
+     * gets the item count
+     * @return int item count
+     */
     @Override
     public int getItemCount() {
         return users.size();
     }
     
+    /**
+     * on press listener
+     */
     public interface OnPressListener
     {
         void onPress(int position);
