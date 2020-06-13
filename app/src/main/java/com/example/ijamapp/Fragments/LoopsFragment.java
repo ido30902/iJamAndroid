@@ -19,6 +19,8 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -106,7 +108,7 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
         
         getValues();
         
-        fetchPosts(default_value_bundle.getString("user_id"), new IVolleyCallBack() {
+        fetchPosts(new IVolleyCallBack() {
             @Override
             public void onArrival() {
                 adapter = new LoopsRecyclerViewAdapter(posts, LoopsFragment.this);
@@ -115,8 +117,6 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
         });
         
         getUserDetails(default_value_bundle.getString("user_id"));
-        
-        setRecyclerView();
     }
     
     /**
@@ -142,10 +142,12 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //add new loop
+                //adds new loop
                 startLoopCreationProcess(default_value_bundle.getString("user_id"));
             }
         });
+    
+        setRecyclerView();
     }
     
     /**
@@ -163,8 +165,6 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
         //adapter set up
         adapter = new LoopsRecyclerViewAdapter(posts, LoopsFragment.this);
         recyclerView.setAdapter(adapter);
-        
-        
     }
     
     /**
@@ -225,29 +225,29 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
     
     /**
      * fetches the posts from the server
-     * @param user_id String
      * @param iVolleyCallBack CallBack Interface
      */
-    private void fetchPosts(final String user_id, final IVolleyCallBack iVolleyCallBack)
+    private void fetchPosts(final IVolleyCallBack iVolleyCallBack)
     {
-        StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, NetworkProperties.SERVER_MANAGER_URL, new Response.Listener<String>() {
+        StringRequest fetch = new StringRequest(Request.Method.POST, NetworkProperties.SERVER_MANAGER_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response)
             {
                 try
                 {
                     JSONObject jsonObject = new JSONObject(response);
-        
+                    
                     if(jsonObject.has("isValid"))
                     {
                         String ans = Utility.trimBooleanResponse(jsonObject.getString("isValid"));
-            
+    
+                        
+                        
                         if (ans.equals("true"))
                         {
-                
                             if (jsonObject.has("posts"))
                             {
-                                JSONArray tjsonArray = jsonObject.getJSONArray("users");
+                                JSONArray tjsonArray = jsonObject.getJSONArray("posts");
                     
                                 JSONArray jsonArray = tjsonArray.getJSONArray(0);
                     
@@ -259,19 +259,16 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
                                     String post_id = tempJSONObject.getString("admin_id");
                                     
                                     Post newPost = new Post(admin_id,post_id);
+                                    newPost.setAdmin_username(tempJSONObject.getString("username"));
                                     
                                     posts.add(newPost);
                                 }
                                 iVolleyCallBack.onArrival();
                             }
-                            else
-                            {
-                            
-                            }
                         }
                         else
                         {
-                
+                        
                         }
                     }
                     else
@@ -283,6 +280,7 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
                 {
                     e.printStackTrace();
                 }
+                iVolleyCallBack.onArrival();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -297,10 +295,10 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
             {
                 HashMap<String, String> params = new HashMap<>();
                 params.put("request_name","GET_POSTS_LIST");
-                params.put("user_id",user_id);
                 return params;
             }
         };
+        MySingleton.getInstance(getContext()).addToRequestQueue(fetch);
     }
     
     /**
