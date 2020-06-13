@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -28,6 +29,7 @@ import com.example.ijamapp.Services.PlayService;
 import com.example.ijamapp.Services.RecordService;
 import com.example.ijamapp.Utilities.Utility;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -71,9 +73,6 @@ public class LooperActivity extends AppCompatActivity {
         setVariables();
     
         askForPermissions(); // Asks only if necessary
-        
-        modifiedLayers.add(new AudioTrack());
-        
     }
     
     /**
@@ -163,9 +162,11 @@ public class LooperActivity extends AppCompatActivity {
                if (!isRecording)
                {
                    intent = new Intent(getApplicationContext(), RecordService.class);
-                   intent.putExtra("command","record");
+                   intent.putExtra("command","stop");
                    intent.putExtra("post",post);
                    stopService(intent);
+                   
+                   addAudioToLoop();
                }
                 
                 else
@@ -237,7 +238,14 @@ public class LooperActivity extends AppCompatActivity {
      */
     private void askForPermissions()
     {
-        String[] request = new String[1];
+        String[] request = new String[3];
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+        {
+            request[0] = Manifest.permission.RECORD_AUDIO;
+            request[1] = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+            request[2] = Manifest.permission.READ_EXTERNAL_STORAGE;
+            ActivityCompat.requestPermissions(LooperActivity.this,request,1);
+        }
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)
         {
             request[0] = Manifest.permission.RECORD_AUDIO;
@@ -291,19 +299,32 @@ public class LooperActivity extends AppCompatActivity {
         intent.putExtra("command","tick");
         //set 3
         startService(intent);
-        stopService(intent);
         Utility.waitOneSecond();
         
         //set 2
         startService(intent);
-        stopService(intent);
         Utility.waitOneSecond();
         
         //set 1
         startService(intent);
-        stopService(intent);
         Utility.waitOneSecond();
         
     }
+    
+    /**
+     * Adds the audioTrack to the post loop
+     */
+    private void addAudioToLoop()
+    {
+        File file = new File(Environment.getExternalStorageDirectory() + "/" +  post.getPost_id() + "/" + Utility.generateAudioFileName(post));
+        
+        AudioTrack audioTrack = new AudioTrack(file,post.getAdmin(),post);
+        
+        post.getSoundManager().addAudioTrack(audioTrack);
+        
+        modifiedLayers.add(audioTrack);
+        
+    }
+    
     
 }

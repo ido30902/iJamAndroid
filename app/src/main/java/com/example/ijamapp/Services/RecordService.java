@@ -13,8 +13,13 @@ import com.example.ijamapp.Utilities.Utility;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Record service
+ */
 public class RecordService extends Service {
     
+    
+    // Variables
     private MediaRecorder mediaRecorder;
     private File file = null;
     private String tempFileName;
@@ -27,15 +32,24 @@ public class RecordService extends Service {
     
     private Post post;
     
-    
-    
-    
+    /**
+     * onBind method
+     * @param intent intent
+     * @return null
+     */
     @Override
     public IBinder onBind(Intent intent)
     {
         return null;
     }
     
+    /**
+     * called when startService() is called
+     * @param intent intent
+     * @param flags int
+     * @param startId int
+     * @return START_STICKY
+     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         
@@ -54,12 +68,21 @@ public class RecordService extends Service {
         return START_STICKY;
     }
     
+    /**
+     * called when stop service is called
+     * @param name intent
+     * @return on destroy
+     */
     @Override
     public boolean stopService(Intent name) {
         startRecording();
         return super.stopService(name);
     }
     
+    /**
+     * gets the values from the intent
+     * @param values intent
+     */
     private void getValues(Intent values)
     {
         post = values.getParcelableExtra("post");
@@ -67,6 +90,9 @@ public class RecordService extends Service {
         tempFileName = Utility.generateAudioFileName(post);
     }
     
+    /**
+     * sets the variables
+     */
     private void setVariables()
     {
         dir = new File(Environment.getExternalStorageDirectory() + "/" +  post.getPost_id() + "/");
@@ -85,6 +111,9 @@ public class RecordService extends Service {
         }
     }
     
+    /**
+     * initialize the media recorder
+     */
     private void initMediaRecorder()
     {
         mediaRecorder = new MediaRecorder();
@@ -99,6 +128,9 @@ public class RecordService extends Service {
         
     }
     
+    /**
+     * starts recording
+     */
     private void startRecording()
     {
         try
@@ -112,6 +144,9 @@ public class RecordService extends Service {
         }
     }
     
+    /**
+     * stops recording
+     */
     private void stopRecording()
     {
         if (mediaRecorder != null)
@@ -121,6 +156,9 @@ public class RecordService extends Service {
         }
     }
     
+    /**
+     * called when onDestroy is called
+     */
     @Override
     public void onDestroy() {
         

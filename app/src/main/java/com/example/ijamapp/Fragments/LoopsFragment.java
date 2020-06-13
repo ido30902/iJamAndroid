@@ -51,16 +51,22 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
  */
 public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.onPressListener
 {
+    /*Variables*/
+    
+    //RecyclerView
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     
+    //default
     private ArrayList<Post> posts;
     
     private Bundle default_value_bundle;
     
+    //Views
     private FloatingActionButton floatingActionButton;
     
+    //PopupWindow + PopupWindow Views
     private PopupWindow new_loop_setup_window;
     private Button PUW_cancel;
     private Button PUW_jam;
@@ -73,6 +79,13 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
         posts = new ArrayList<>();
     }
     
+    /**
+     * creates the view
+     * @param inflater LayoutInflater
+     * @param container ViewGroup
+     * @param savedInstanceState Bundle
+     * @return View
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -80,6 +93,11 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
         return inflater.inflate(R.layout.fragment_loops, container, false);
     }
     
+    /**
+     * When view created
+     * @param view View
+     * @param savedInstanceState Bundle
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -101,6 +119,10 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
         setRecyclerView();
     }
     
+    /**
+     * when view restored
+     * @param savedInstanceState bundle
+     */
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
@@ -108,6 +130,9 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
         setRecyclerView();
     }
     
+    /**
+     * sets the fragments views
+     */
     private void setViews()
     {
         recyclerView = getView().findViewById(R.id.Loops_RecyclerView);
@@ -123,6 +148,9 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
         });
     }
     
+    /**
+     * sets the recycler view
+     */
     private void setRecyclerView()
     {
         //fixed size
@@ -139,6 +167,10 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
         
     }
     
+    /**
+     * gets the user details
+     * @param user_id
+     */
     private void getUserDetails(final String user_id)
     {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, NetworkProperties.SERVER_MANAGER_URL, new Response.Listener<String>() {
@@ -191,6 +223,11 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
         MySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
     
+    /**
+     * fetches the posts from the server
+     * @param user_id String
+     * @param iVolleyCallBack CallBack Interface
+     */
     private void fetchPosts(final String user_id, final IVolleyCallBack iVolleyCallBack)
     {
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, NetworkProperties.SERVER_MANAGER_URL, new Response.Listener<String>() {
@@ -266,6 +303,10 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
         };
     }
     
+    /**
+     * uploads the post
+     * @param post Post
+     */
     private void uploadPost(final Post post)
     {
     
@@ -275,12 +316,18 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
     
     }
     
+    /**
+     * update the post
+     * @param post
+     */
     private void updatePost(Post post)
     {
     
     }
     
-    
+    /**
+     * gets the values from the bundle
+     */
     private void getValues()
     {
         if(getActivity().getIntent() == null)
@@ -289,6 +336,10 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
         default_value_bundle = getActivity().getIntent().getBundleExtra("default_values_bundle");
     }
     
+    /**
+     * loop setup window
+     * @param user_id String
+     */
     private void startLoopCreationProcess(String user_id)
     {
         View v = setupNewLoopWindow();
@@ -299,6 +350,10 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
         
     }
     
+    /**
+     * sets up the window
+     * @return View
+     */
     private View setupNewLoopWindow()
     {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -312,6 +367,10 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
         return loop_setup;
     }
     
+    /**
+     * sets up the window's views
+     * @param view
+     */
     private void setupNewLoopViews(View view)
     {
         //Buttons
@@ -368,6 +427,12 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
         });
     }
     
+    /**
+     * onActivityResult
+     * @param requestCode int
+     * @param resultCode int
+     * @param data Intent
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
@@ -403,6 +468,10 @@ public class LoopsFragment extends Fragment implements LoopsRecyclerViewAdapter.
         }
     }
     
+    /**
+     * onPress Interface of the adapter
+     * @param position int
+     */
     @Override
     public void onPress(int position)
     {

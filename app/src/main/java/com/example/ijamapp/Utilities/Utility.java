@@ -6,18 +6,20 @@ import android.graphics.drawable.BitmapDrawable;
 import android.util.Base64;
 import android.widget.ImageView;
 
-import com.example.ijamapp.Classes.AudioTrack;
 import com.example.ijamapp.Classes.Post;
-import com.example.ijamapp.Classes.SoundManager;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Utility
 {
+    /**
+     * checks the email format
+     * @param email String
+     * @return boolean
+     */
     public static boolean checkEmailFormat(String email) {
         if (email == null)
             return false;
@@ -31,6 +33,11 @@ public class Utility
         return pat.matcher(email).matches();
     }
     
+    /**
+     * converts bitmap to String
+     * @param bitmap Bitmap
+     * @return String
+     */
     public static String bitmapToString(Bitmap bitmap) {
         if (bitmap == null)
             return "error";
@@ -41,6 +48,11 @@ public class Utility
         return Base64.encodeToString(b, Base64.DEFAULT);
     }
     
+    /**
+     * Coverts String to bitmap
+     * @param encodedString String
+     * @return Bitmap
+     */
     public static Bitmap StringToBitMap(String encodedString) {
         try
         {
@@ -55,6 +67,11 @@ public class Utility
         }
     }
     
+    /**
+     * trins the boolean response from json
+     * @param str String
+     * @return String
+     */
     public static String trimBooleanResponse(String str)
     {
         if(str == null)
@@ -62,6 +79,11 @@ public class Utility
         return str.substring(1, str.length() - 1);
     }
     
+    /**
+     * trins the String response from json
+     * @param str String
+     * @return String
+     */
     public static String trimStringResponse(String str)
     {
         if(str == null)
@@ -69,6 +91,11 @@ public class Utility
         return str.substring(2, str.length() - 2);
     }
     
+    /**
+     * Checks if a String contains any illegal chars
+     * @param toExamine String
+     * @return boolean
+     */
     public static boolean containsIllegals(String toExamine)
     {
         Pattern pattern = Pattern.compile("[~#@*+%{}<>\\[\\]|\"\\ ^]");
@@ -76,7 +103,10 @@ public class Utility
         return matcher.find();
     }
     
-    
+    /**
+     * the the imageview round
+     * @param imageView ImageView - View
+     */
     public static void makeTheImageRound(ImageView imageView)
     {
         BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
@@ -90,6 +120,9 @@ public class Utility
         imageView.setImageDrawable(new RoundImage(bitmap));
     }
     
+    /**
+     * Waits one second
+     */
     public static void waitOneSecond()
     {
         try
@@ -102,6 +135,10 @@ public class Utility
         }
     }
     
+    /**
+     * Waits x seconds
+     * @param i x
+     */
     public static void waitAmountOfSeconds(int i)
     {
         try
@@ -114,7 +151,12 @@ public class Utility
         }
     }
     
-    public static String generateAudioFileName( Post post)
+    /**
+     * generates file name for audio tracl
+     * @param post post object
+     * @return String
+     */
+    public static String generateAudioFileName(Post post)
     {
         return post.getPost_id() + "_" + (post.getSoundManager().getAudioTracksSize() + 1);
     }

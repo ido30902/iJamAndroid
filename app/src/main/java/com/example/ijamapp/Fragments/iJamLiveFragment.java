@@ -20,13 +20,21 @@ import com.example.ijamapp.R;
 public class iJamLiveFragment extends Fragment
 {
     
-    
+    /**
+     * Empty constructor
+     */
     public iJamLiveFragment()
     {
         // Required empty public constructor
     }
     
-    
+    /**
+     * creates the view
+     * @param inflater LayoutInflater
+     * @param container viewgroup
+     * @param savedInstanceState Bundle
+     * @return new View
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -34,6 +42,11 @@ public class iJamLiveFragment extends Fragment
         return inflater.inflate(R.layout.fragment_i_jam_live, container, false);
     }
     
+    /**
+     * when view created
+     * @param view view
+     * @param savedInstanceState Bundle
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
@@ -43,6 +56,10 @@ public class iJamLiveFragment extends Fragment
         
     }
     
+    /**
+     * when view restored
+     * @param savedInstanceState
+     */
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState)
     {

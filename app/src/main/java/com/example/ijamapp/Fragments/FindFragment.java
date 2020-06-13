@@ -10,12 +10,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -55,11 +53,21 @@ public class FindFragment extends Fragment implements FindRecyclerViewAdapter.On
     
     private Bundle default_value_bundle;
     
+    /**
+     * Empty constructor
+     */
     public FindFragment()
     {
     
     }
     
+    /**
+     * inflates the view
+     * @param inflater inflater
+     * @param container container
+     * @param savedInstanceState
+     * @return layout
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -67,6 +75,11 @@ public class FindFragment extends Fragment implements FindRecyclerViewAdapter.On
         return inflater.inflate(R.layout.fragment_find, container, false);
     }
     
+    /**
+     * when the view is created
+     * @param view view
+     * @param savedInstanceState bundle
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
@@ -80,12 +93,19 @@ public class FindFragment extends Fragment implements FindRecyclerViewAdapter.On
         
     }
     
+    /**
+     * when view restored
+     * @param savedInstanceState
+     */
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState)
     {
         super.onViewStateRestored(savedInstanceState);
     }
     
+    /**
+     * sets the views of the fragment
+     */
     private void setViews()
     {
         //Search view
@@ -118,11 +138,17 @@ public class FindFragment extends Fragment implements FindRecyclerViewAdapter.On
     
     }
     
+    /**
+     * sets the variables
+     */
     public void setVariables()
     {
         users = new ArrayList<>();
     }
     
+    /**
+     * sets the RecyclerView
+     */
     private void setRecyclerView()
     {
         recyclerView = getView().findViewById(R.id.Find_RecyclerView);
@@ -134,6 +160,11 @@ public class FindFragment extends Fragment implements FindRecyclerViewAdapter.On
         recyclerView.setAdapter(findRecyclerViewAdapter);
     }
     
+    /**
+     * sends the query to the server
+     * @param query String
+     * @param volleyCallBack Interface callback
+     */
     private void searchQuery(final String query, final IVolleyCallBack volleyCallBack)
     {
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, NetworkProperties.SERVER_MANAGER_URL, new Response.Listener<String>() {
@@ -208,6 +239,9 @@ public class FindFragment extends Fragment implements FindRecyclerViewAdapter.On
         MySingleton.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
     }
     
+    /**
+     * gets the values from the intent
+     */
     private void getValues()
     {
         if(getActivity().getIntent() == null)
@@ -216,7 +250,10 @@ public class FindFragment extends Fragment implements FindRecyclerViewAdapter.On
         default_value_bundle = getActivity().getIntent().getBundleExtra("default_values_bundle");
     }
     
-    
+    /**
+     * onPress interface of the RecyclerView
+     * @param position int
+     */
     @Override
     public void onPress(int position)
     {

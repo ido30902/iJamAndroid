@@ -33,6 +33,10 @@ public class User implements Parcelable
         this.LISTENING = LISTENING;
     }
     
+    /**
+     *Parcelable
+     * @param in
+     */
     protected User(Parcel in) {
         user_id = in.readString();
         username = in.readString();
@@ -41,6 +45,9 @@ public class User implements Parcelable
         LISTENING = in.createTypedArrayList(User.CREATOR);
     }
     
+    /***
+     *Parcelable
+     */
     public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
         public User createFromParcel(Parcel in) {
@@ -53,72 +60,130 @@ public class User implements Parcelable
         }
     };
     
+    /*Setters and Getters*/
+    
+    /**
+     * gets the userid
+     * @return String
+     */
     public String getUser_id()
     {
         return this.user_id;
     }
     
+    /**
+     * sets the user id
+     * @param user_id String
+     */
     public void setUser_id(String user_id) {
         
         this.user_id = user_id;
     }
     
+    /**
+     * gets the username
+     * @return String
+     */
     public String getUsername()
     {
         return this.username;
     }
     
+    /**
+     * sets the username
+     * @param username String
+     */
     public void setUsername(String username)
     {
         this.username = username;
     }
     
+    /**
+     * gets the profile image - Bitmap
+     * @return Bitmap
+     */
     public Bitmap getProfilePicture()
     {
         return this.profilePictuere;
     }
     
+    /**
+     * sets the profile picture Bitmap
+     * @param profilePictuere Bitmap
+     */
     public void setProfilePictuere(Bitmap profilePictuere)
     {
         this.profilePictuere = profilePictuere;
     }
     
+    /**
+     * gets the listeners
+     * @return ArrayList
+     */
     public ArrayList<User> getLISTENSERS()
     {
         return this.LISTENSERS;
     }
     
+    /**
+     * sets the listeners
+     * @param LISTENSERS ArrayList
+     */
     public void setLISTENSERS(ArrayList<User> LISTENSERS)
     {
         this.LISTENSERS = LISTENSERS;
     }
     
+    /**
+     * gets the listening
+     * @return ArrayList
+     */
     public ArrayList<User> getLISTENING()
     {
         return this.LISTENING;
     }
     
+    /**
+     * sets the listening
+     * @param LISTENING
+     */
     public void setLISTENING(ArrayList<User> LISTENING)
     {
         this.LISTENING = LISTENING;
     }
     
+    /**
+     * gets the listeners count
+     * @return int
+     */
     public int getListensersCount()
     {
         return this.LISTENSERS.size();
     }
     
+    /**
+     * gets the listening count
+     * @return int
+     */
     public int getListeningCount()
     {
         return this.LISTENING.size();
     }
     
-    
+    /**
+     *Parcelable
+     * @return
+     */
     @Override
     public int describeContents() {
         return 0;
     }
     
+    /**
+     * Parcelable
+     * @param dest
+     * @param flags
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
     

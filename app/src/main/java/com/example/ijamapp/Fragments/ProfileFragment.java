@@ -6,8 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -26,19 +24,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.ijamapp.Activities.LooperActivity;
-import com.example.ijamapp.Activities.MainActivity;
 import com.example.ijamapp.R;
 import com.example.ijamapp.Utilities.MySingleton;
 import com.example.ijamapp.Utilities.NetworkProperties;
-import com.example.ijamapp.Utilities.RoundImage;
 import com.example.ijamapp.Utilities.Utility;
 
 import org.json.JSONException;
@@ -58,14 +52,29 @@ public class ProfileFragment extends Fragment
     private TextView username_textview;
     private Bundle default_value_bundle;
     
+    /**
+     * Constructor
+     */
     public ProfileFragment() { }
     
+    /**
+     * Creates the view
+     * @param inflater LayoutInflater
+     * @param container ViewGroup
+     * @param savedInstanceState Bundle
+     * @return View
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
     
+    /**
+     * When view created
+     * @param view view
+     * @param savedInstanceState Bundle
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
@@ -87,6 +96,10 @@ public class ProfileFragment extends Fragment
         
     }
     
+    /**
+     * When view restored
+     * @param savedInstanceState bundle
+     */
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState)
     {
@@ -102,7 +115,9 @@ public class ProfileFragment extends Fragment
         
     }
     
-    
+    /**
+     * sets the views of the fragment
+     */
     private void setViews()
     {
         //ImageView
@@ -126,6 +141,9 @@ public class ProfileFragment extends Fragment
         });
     }
     
+    /**
+     * gets the values of the intent
+     */
     private void getValues()
     {
         if(getActivity().getIntent() == null)
@@ -134,6 +152,9 @@ public class ProfileFragment extends Fragment
         default_value_bundle = getActivity().getIntent().getBundleExtra("default_values_bundle");
     }
     
+    /**
+     * fetches profile image from server
+     */
     private void fetchProfileImage()
     {
         StringRequest request = new StringRequest(Request.Method.POST, NetworkProperties.SERVER_MANAGER_URL, new Response.Listener<String>() {
@@ -162,6 +183,10 @@ public class ProfileFragment extends Fragment
         MySingleton.getInstance(getContext()).addToRequestQueue(request);
     }
     
+    /**
+     * fetches username from server
+     * @param user_id String
+     */
     private void fetchUsername(final String user_id)
     {
         StringRequest request = new StringRequest(Request.Method.POST, NetworkProperties.SERVER_MANAGER_URL, new Response.Listener<String>() {
@@ -218,6 +243,9 @@ public class ProfileFragment extends Fragment
         MySingleton.getInstance(getContext()).addToRequestQueue(request);
     }
     
+    /**
+     * select new image
+     */
     private void selectNewImage()
     {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -260,6 +288,13 @@ public class ProfileFragment extends Fragment
     
     
     //TODO - Fix the gallery result
+    
+    /**
+     * onActivityResult
+     * @param requestCode int
+     * @param resultCode int
+     * @param data Intent
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -288,6 +323,9 @@ public class ProfileFragment extends Fragment
         }
     }
     
+    /**
+     * Asks for camera permission
+     */
     private void askForPermissions()
     {
         if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)

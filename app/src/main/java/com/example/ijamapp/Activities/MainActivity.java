@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     Button PUW_closewindow;
     
     // BroadcastReceiver
-    BroadcastReceiver wifiChecker;
+    public BroadcastReceiver wifiChecker;
     
     /**
      * onCreate

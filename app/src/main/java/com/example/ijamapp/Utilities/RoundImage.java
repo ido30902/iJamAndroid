@@ -12,9 +12,13 @@ import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
+/**
+ * RoundImage Class
+ */
 public class RoundImage extends Drawable
 {
     
+    // Variables
     private final Bitmap mBitmap;
     private final Paint mPaint;
     private final RectF mRectF;
@@ -22,6 +26,10 @@ public class RoundImage extends Drawable
     private final int mBitmapHeight;
     
     
+    /**
+     * Constructors
+     * @param bitmap Bitmap
+     */
     public RoundImage(Bitmap bitmap)
     {
         mBitmap = bitmap;
@@ -37,11 +45,19 @@ public class RoundImage extends Drawable
         mBitmapHeight = mBitmap.getHeight();
     }
     
+    /**
+     * Draw method
+     * @param canvas canvas object
+     */
     @Override
     public void draw(Canvas canvas) {
         canvas.drawOval(mRectF, mPaint);
     }
     
+    /**
+     * called when bounds change
+     * @param bounds rect
+     */
     @Override
     protected void onBoundsChange(Rect bounds)
     {
@@ -49,6 +65,10 @@ public class RoundImage extends Drawable
         mRectF.set(bounds);
     }
     
+    /**
+     * sets the alpha
+     * @param alpha int
+     */
     @Override
     public void setAlpha(int alpha)
     {
@@ -59,30 +79,50 @@ public class RoundImage extends Drawable
         }
     }
     
+    /**
+     * sers the color filter
+     * @param cf color filter object
+     */
     @Override
     public void setColorFilter(ColorFilter cf)
     {
         mPaint.setColorFilter(cf);
     }
     
+    /**
+     * gets the opacity
+     * @return int
+     */
     @Override
     public int getOpacity()
     {
         return PixelFormat.TRANSLUCENT;
     }
     
+    /**
+     * gets the intrinsic width
+     * @return int
+     */
     @Override
     public int getIntrinsicWidth()
     {
         return mBitmapWidth;
     }
     
+    /**
+     * gets the intrinsic height
+     * @return int
+     */
     @Override
     public int getIntrinsicHeight()
     {
         return mBitmapHeight;
     }
     
+    /**
+     * sets filter bitmap
+     * @param filter boolean
+     */
     @Override
     public void setFilterBitmap(boolean filter)
     {
@@ -90,6 +130,10 @@ public class RoundImage extends Drawable
         invalidateSelf();
     }
     
+    /**
+     * gets the bitmap
+     * @return Bitmap
+     */
     public Bitmap getBitmap()
     {
         return mBitmap;
